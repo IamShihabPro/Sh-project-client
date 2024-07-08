@@ -21,7 +21,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gray-900 fixed top-0 inset-x-0 z-50 shadow-sm">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className='hidden md:block lg:block'>
               <NavLink to="/" className="flex items-center gap-2 text-white">

@@ -26,8 +26,10 @@ const Navbar = () => {
             <div className='hidden md:block lg:block'>
               <NavLink to="/" className="flex items-center gap-2 text-white">
                 {/* <BsCart4 className="h-8 w-8" /> */}
-                <img src={logo} className='w-28' alt="" />
-                <Link to='/' className="font-bold text-xl">Camping Shop</Link>
+                
+                <Link to='/' className="font-bold text-xl">
+                  <img src={logo} className='w-28' alt="" />
+                </Link>
               </NavLink>
             </div>
   
@@ -69,8 +71,8 @@ const Navbar = () => {
             <div className='block md:hidden lg:hidden'>
               <NavLink to="/" className="flex items-center gap-2 text-white">
                 {/* <BsCart4 className="h-8 w-8" /> */}
-                <img src={logo} className='w-12' alt="" />
-                <Link to='/' className="font-bold text-2xl">Camping Shop</Link>
+                
+                <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-28' alt="" /></Link>
               </NavLink>
             </div>
   

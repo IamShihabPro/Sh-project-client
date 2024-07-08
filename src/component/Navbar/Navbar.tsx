@@ -72,7 +72,7 @@ const Navbar = () => {
               <NavLink to="/" className="flex items-center gap-2 text-white">
                 {/* <BsCart4 className="h-8 w-8" /> */}
                 
-                <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-28' alt="" /></Link>
+                <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-20' alt="" /></Link>
               </NavLink>
             </div>
   

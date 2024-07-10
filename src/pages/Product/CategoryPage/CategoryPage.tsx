@@ -3,7 +3,7 @@ import { useGetProductQuery } from "@/redux/api/baseApi";
 import { TProduct } from "@/types/productType";
 
 const CategoryPage = () => {
-    const {data, isLoading} = useGetProductQuery(undefined)
+    const {data} = useGetProductQuery(undefined)
 
     return (
         <div className="max-w-screen-2xl mx-auto">

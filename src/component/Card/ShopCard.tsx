@@ -1,9 +1,9 @@
 
 const ShopCard = ({product}) => {
     return (
-        <div className='col-span-1 cursor-pointer group bg-white drop-shadow-md rounded-md p-2 my-2 mx-3'>
+        <div className='col-span-1 cursor-pointer group bg-white rounded-sm p-2 my-2 mx-3'>
       <div className='flex flex-col gap-2 w-full'>
-        <div className='aspect-square w-full relative overflow-hidden rounded-md'>
+        <div className='aspect-square w-full relative overflow-hidden'>
           <img
             className='object-cover h-full w-full group-hover:scale-110 transition'
             src={product.image}

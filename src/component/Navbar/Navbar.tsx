@@ -9,9 +9,10 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navItems = [
         { id: 1, link: '/', title: 'Home' },
-        { id: 2, link: '/footeware', title: 'Footeware' },
+        { id: 2, link: '/products', title: 'Products' },
         { id: 3, link: '/backpacks', title: 'Backpacks' },
         { id: 4, link: '/equipments', title: 'Equipments' },
+        { id: 5, link: '/footeware', title: 'Footeware' },
       ];
 
       

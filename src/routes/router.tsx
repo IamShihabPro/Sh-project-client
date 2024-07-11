@@ -1,4 +1,6 @@
 import App from "@/App";
+import AddProduct from "@/pages/AddProduct/AddProduct";
+import AllProduct from "@/pages/AllProduct/AllProduct";
 import Home from "@/pages/Home/Home";
 import Management from "@/pages/Management/Management";
 import ProductPage from "@/pages/Product/ProductPage/ProductPage";
@@ -24,7 +26,12 @@ export const router = createBrowserRouter([
       element: <Management/>,
       children:[
         {
-
+          path: 'addProduct',
+          element: <AddProduct/>
+        },
+        {
+          path: 'allProduct',
+          element: <AllProduct/>
         }
       ]
     }

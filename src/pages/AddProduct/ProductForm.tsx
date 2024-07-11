@@ -1,3 +1,4 @@
+import { useAddProductMutation } from '@/redux/api/baseApi';
 import React from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { ImCross } from "react-icons/im";
@@ -25,6 +26,8 @@ type TProduct = {
 };
 
 const ProductForm: React.FC<{ product?: TProduct }> = () => {
+
+  const [addProduct] = useAddProductMutation()
     
   const { register, control, handleSubmit, formState: { errors } } = useForm<TProduct>({
   });
@@ -39,8 +42,16 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
     name: "tags"
   });
 
-  const onSubmit: SubmitHandler<TProduct> = data => {
+  const onSubmit: SubmitHandler<TProduct> = async (data) => {
+    data.price = parseFloat(data.price.toString());
+    data.inventory.quantity = parseFloat(data.inventory.quantity.toString());
     console.log(data);
+    try {
+      const res = await addProduct(data)
+      console.log(res)
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   return (

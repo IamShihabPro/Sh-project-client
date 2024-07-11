@@ -5,7 +5,7 @@ export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
   tagTypes: ['products'],
-  endpoints: (builder) => ({
+  endpoints: () => ({
     // getProduct: builder.query({
     //     query: () => ({
     //         method: 'GET',

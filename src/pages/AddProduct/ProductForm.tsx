@@ -75,27 +75,25 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
         {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
       </div>
 
-      <div>
-        <label className="block mb-2 text-sm font-medium text-gray-700">Price</label>
-        <input
-          type="number"
-          {...register('price', { required: 'Price is required' })}
-          className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
-        />
-        {errors.price && <span className="text-red-500 text-sm">{errors.price.message}</span>}
-      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+        <div className="flex flex-col">
+          <label className="mb-2 text-sm font-medium text-gray-700">Price</label>
+          <input
+            type="number"
+            {...register('price', { required: 'Price is required' })}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          {errors.price && <span className="mt-1 text-red-500 text-sm">{errors.price.message}</span>}
+        </div>
 
-      <div>
-        <label className="block mb-2 text-sm font-medium text-gray-700">Category</label>
-        <input
-          {...register('category', { required: 'Category is required' })}
-          className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
-        />
-        {errors.category && <span className="text-red-500 text-sm">{errors.category.message}</span>}
-      </div>
-
-      <div>
-        
+        <div className="flex flex-col">
+          <label className="mb-2 text-sm font-medium text-gray-700">Category</label>
+          <input
+            {...register('category', { required: 'Category is required' })}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          {errors.category && <span className="mt-1 text-red-500 text-sm">{errors.category.message}</span>}
+        </div>
       </div>
 
       <div>
@@ -170,7 +168,7 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
           </div>
         ))}
         <button type="button" onClick={() => appendVariant({ image: '' })} className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600">
-          Add Image
+          Add More Image
         </button>
       </div>
 

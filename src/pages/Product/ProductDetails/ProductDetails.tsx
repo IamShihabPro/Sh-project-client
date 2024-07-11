@@ -5,7 +5,6 @@ import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";
 import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 
-
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleProductQuery(id as string);
@@ -16,7 +15,6 @@ const ProductDetails = () => {
   }
 
   const { data: product } = data;
-  console.log(product);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -56,10 +54,12 @@ const ProductDetails = () => {
               <span className="font-bold">Category:</span>
               <span className="uppercase"> {product.category}</span>
             </p>
-            <p className="text-lg mt-2 text-blue-500">
-              <span className="font-bold text-black mr-4">Tags: </span>
-              {product.tags.join(", ")}
-            </p>
+            {product.tags && (
+              <p className="text-lg mt-2 text-blue-500">
+                <span className="font-bold text-black mr-4">Tags: </span>
+                {product.tags.join(", ")}
+              </p>
+            )}
             <button
               onClick={handleOpenModal}
               className="mt-4 text-center font-medium bg-gray-700 text-white px-4 py-2"

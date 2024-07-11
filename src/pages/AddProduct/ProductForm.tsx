@@ -1,4 +1,5 @@
-import { useAddProductMutation } from '@/redux/api/baseApi';
+// import { useAddProductMutation } from '@/redux/api/baseApi';
+import { useAddProductMutation } from '@/redux/feature/product/productApi';
 import React from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { ImCross } from "react-icons/im";
@@ -91,6 +92,10 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
           className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
         />
         {errors.category && <span className="text-red-500 text-sm">{errors.category.message}</span>}
+      </div>
+
+      <div>
+        
       </div>
 
       <div>

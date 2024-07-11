@@ -1,7 +1,8 @@
 import ProductCard from "@/component/Card/ProductCard";
-import { useGetProductQuery } from "@/redux/api/baseApi";
+// import { useGetProductQuery } from "@/redux/api/baseApi";
 import Filter from "./Filter";
 import { TProduct } from "@/types/productType";
+import { useGetProductQuery } from "@/redux/feature/product/productApi";
 
 const ProductPage = () => {
     const {data} = useGetProductQuery(undefined)

@@ -1,5 +1,6 @@
 import ShopCard from "@/component/Card/ShopCard";
-import { useGetProductQuery } from "@/redux/api/baseApi";
+import { useGetProductQuery } from "@/redux/feature/product/productApi";
+// import { useGetProductQuery } from "@/redux/api/baseApi";
 import { TProduct } from "@/types/productType";
 
 const CategoryPage = () => {

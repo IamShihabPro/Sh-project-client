@@ -6,27 +6,27 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
   tagTypes: ['products'],
   endpoints: (builder) => ({
-    getProduct: builder.query({
-        query: () => ({
-            method: 'GET',
-            url: 'products',
-        }),
-        providesTags: ['products'],
-      }),
-    addProduct: builder.mutation({
-      query: (data) =>{
-        console.log(data)
-        return{
-          method: 'POST',
-          url: 'products',
-          body: data
-        }
-      },
-      invalidatesTags: ['products'],
-    })
+    // getProduct: builder.query({
+    //     query: () => ({
+    //         method: 'GET',
+    //         url: 'products',
+    //     }),
+    //     providesTags: ['products'],
+    //   }),
+    // addProduct: builder.mutation({
+    //   query: (data) =>{
+    //     console.log(data)
+    //     return{
+    //       method: 'POST',
+    //       url: 'products',
+    //       body: data
+    //     }
+    //   },
+    //   invalidatesTags: ['products'],
+    // })
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductQuery, useAddProductMutation } = baseApi
+// export const { useGetProductQuery, useAddProductMutation } = baseApi

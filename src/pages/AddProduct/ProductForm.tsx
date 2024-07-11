@@ -3,8 +3,7 @@ import { useAddProductMutation } from '@/redux/feature/product/productApi';
 import React from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { ImCross } from "react-icons/im";
-
-
+import { toast } from "sonner";
 
 type TVariant = {
   image: string;
@@ -48,7 +47,10 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
     data.inventory.quantity = parseFloat(data.inventory.quantity.toString());
     console.log(data);
     try {
-      const res = await addProduct(data)
+      const res = await addProduct(data).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
       console.log(res)
     } catch (error) {
       console.error(error)

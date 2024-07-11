@@ -1,7 +1,8 @@
 // import { FaEye } from "react-icons/fa";
+import { TProduct } from "@/types/productType";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product}: {product: TProduct}) => {
     return (
         <div className='col-span-1 cursor-pointer group bg-white rounded-sm p-2 my-2 mx-3'>
       <Link to={`/products/${product._id}`} className='flex flex-col gap-2 w-full'>
@@ -22,6 +23,7 @@ const ProductCard = ({product}) => {
           <div className='font-semibold'>$ {product.price}</div>
         </div>
       </Link>
+      {/* <button className="mt-2 w-full text-center font-medium bg-gray-700 text-white px-4 py-2">Add Ratings</button> */}
     </div>
     );
 };

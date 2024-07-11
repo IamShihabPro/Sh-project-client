@@ -25,8 +25,18 @@ const productApi = baseApi.injectEndpoints({
             method: 'GET',
             url: `products/${id}`,
           })
-        })
+        }),
+
+        addRating: builder.mutation({
+          query: ({ data, id }) => ({
+            url: `/products/${id}`,
+            method: "PUT",
+            body: data,
+          }),
+          invalidatesTags: ["products"],
+        }),
+
       }),
 })
 
-export const { useGetProductQuery, useAddProductMutation, useGetSingleProductQuery } = productApi
+export const { useGetProductQuery, useAddProductMutation, useGetSingleProductQuery, useAddRatingMutation } = productApi

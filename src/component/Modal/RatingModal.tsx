@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useAddRatingsMutation } from "@/redux/feature/product/productApi";
 import { TProduct } from "@/types/productType";
+import { toast } from "sonner";
 
 const RatingModal = ({ product }: { product: TProduct }) => {
   const [rating, setRating] = useState<number | null>(null);
@@ -16,8 +17,10 @@ const RatingModal = ({ product }: { product: TProduct }) => {
 
     if(rating){
       try {
-        const res = await addRatings({_id: product?._id, rating})
-        console.log(res)
+        const res = await addRatings({_id: product?._id, rating}).unwrap();
+        if (res?.success) {
+          toast.success(res?.message);
+        }
       } catch (error) {
         console.error(error);
       }

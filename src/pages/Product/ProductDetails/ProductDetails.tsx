@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Loader from "@/component/Loader/Loader";
 import RatingModal from "@/component/Modal/RatingModal";
 import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";

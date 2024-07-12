@@ -12,9 +12,6 @@ const RatingModal = ({ product }: { product: TProduct }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(rating)
-    console.log(product)
-
     if(rating){
       try {
         const res = await addRatings({_id: product?._id, rating}).unwrap();

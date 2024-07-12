@@ -1,8 +1,19 @@
 // import { FaEye } from "react-icons/fa";
 import { TProduct } from "@/types/productType";
 import { Link } from "react-router-dom";
+import { Rating } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 const ProductCard = ({product}: {product: TProduct}) => {
+
+  const calculateAverageRating = (ratings: { rating: number }[]) => {
+    const totalRatings = ratings.length;
+    const sumRatings = ratings.reduce((acc, curr) => acc + curr.rating, 0);
+    return totalRatings ? (sumRatings / totalRatings) : 0;
+  };
+
+  const averageRating = calculateAverageRating(product?.ratings);
+  
     return (
         <div className='col-span-1 cursor-pointer group bg-white rounded-sm p-2 my-2 mx-3'>
       <Link to={`/products/${product?._id}`} className='flex flex-col gap-2 w-full'>
@@ -21,9 +32,12 @@ const ProductCard = ({product}: {product: TProduct}) => {
 
         <div className='flex flex-row items-center justify-between'>
           <div className='font-semibold'>$ {product?.price}</div>
+          <div className="flex items-center gap-2">
+            <Rating style={{ maxWidth: 70 }} value={averageRating} readOnly />
+            <span className="text-gray-500">({product?.ratings.length})</span>
+          </div>
         </div>
       </Link>
-      {/* <button className="mt-2 w-full text-center font-medium bg-gray-700 text-white px-4 py-2">Add Ratings</button> */}
     </div>
     );
 };

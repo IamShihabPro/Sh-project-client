@@ -4,6 +4,9 @@ import RatingModal from "@/component/Modal/RatingModal";
 import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";
 import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
+import { Rating } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
+
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -15,6 +18,15 @@ const ProductDetails = () => {
   }
 
   const { data: product } = data;
+
+  
+  const calculateAverageRating = (ratings: { rating: number }[]) => {
+    const totalRatings = ratings.length;
+    const sumRatings = ratings.reduce((acc, curr) => acc + curr.rating, 0);
+    return totalRatings ? (sumRatings / totalRatings) : 0;
+  };
+  // console.log(product.ratings.length)
+  const averageRating = calculateAverageRating(product?.ratings);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -39,7 +51,10 @@ const ProductDetails = () => {
           <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
 
           <p className="text-gray-700 mb-6">{product?.description}</p>
-
+          <div className="flex items-center gap-2">
+            <Rating style={{ maxWidth: 70 }} value={averageRating} readOnly />
+            <span className="text-gray-500">({product?.ratings.length})</span>
+          </div>
           <div className="flex items-center mb-6">
             <p className="text-2xl text-gray-500 font-medium mr-2">Price:</p>
             <p className="text-2xl text-red-500 font-bold">${product?.price}</p>

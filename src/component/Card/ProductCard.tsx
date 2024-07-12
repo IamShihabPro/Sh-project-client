@@ -1,4 +1,3 @@
-// import { FaEye } from "react-icons/fa";
 import { TProduct } from "@/types/productType";
 import { Link } from "react-router-dom";
 import { Rating } from '@smastrom/react-rating'

@@ -1,51 +1,29 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { useGetSingleProductQuery, useUpdateProductMutation } from "@/redux/feature/product/productApi";
-import { TProduct, TRating } from "@/types/productType";
+import { useAddRatingsMutation } from "@/redux/feature/product/productApi";
+import { TProduct } from "@/types/productType";
 
 const RatingModal = ({ product }: { product: TProduct }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
-  const { data, isLoading } = useGetSingleProductQuery(product._id);
-  const [updateProduct] = useUpdateProductMutation();
+  const [addRatings] = useAddRatingsMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (rating !== null) {
+    console.log(rating)
+    console.log(product)
+
+    if(rating){
       try {
-        // Get existing ratings or initialize as an empty array
-        const existingRatings = data?.ratings || [];
-
-        // Check if the rating already exists
-        const alreadyRated = existingRatings.some(r => r.rating === rating);
-        if (alreadyRated) {
-          console.log("You have already rated this product with the same rating.");
-          return;
-        }
-
-        // Construct updated ratings array
-        const updatedRatings = [...existingRatings, { rating }];
-
-        // Call the mutation to update the product with the new ratings array
-        await updateProduct({
-          _id: product._id,
-          ratings: updatedRatings,
-        });
-
-        console.log("Rating added successfully");
-        setRating(null); // Reset rating state after successful submission
-        // Optionally, close the modal or show a success message here
+        const res = await addRatings({_id: product?._id, rating})
+        console.log(res)
       } catch (error) {
-        console.error("Failed to submit rating:", error);
+        console.error(error);
       }
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Optionally, show a loading indicator while fetching data
-  }
-
+  
   return (
     <div className="pt-10">
       <form
@@ -62,7 +40,7 @@ const RatingModal = ({ product }: { product: TProduct }) => {
                   name="rating"
                   className="hidden"
                   value={currentRating}
-                  onClick={() => setRating(currentRating)}
+                  onChange={() => setRating(currentRating)} // Change here
                 />
                 <FaStar
                   className="mx-1 cursor-pointer"

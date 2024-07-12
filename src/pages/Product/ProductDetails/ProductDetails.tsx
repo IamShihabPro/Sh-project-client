@@ -29,20 +29,20 @@ const ProductDetails = () => {
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="lg:w-1/2 flex justify-center items-center">
           <img
-            src={product.image}
-            alt={product.name}
+            src={product?.image}
+            alt={product?.name}
             className="w-full h-auto object-cover rounded-lg shadow-lg max-w-lg"
           />
         </div>
 
         <div className="lg:w-1/2 flex flex-col justify-center p-6 bg-white rounded-lg shadow-sm">
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+          <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
 
-          <p className="text-gray-700 mb-6">{product.description}</p>
+          <p className="text-gray-700 mb-6">{product?.description}</p>
 
           <div className="flex items-center mb-6">
             <p className="text-2xl text-gray-500 font-medium mr-2">Price:</p>
-            <p className="text-2xl text-red-500 font-bold">${product.price}</p>
+            <p className="text-2xl text-red-500 font-bold">${product?.price}</p>
           </div>
 
           <button className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6">
@@ -52,12 +52,12 @@ const ProductDetails = () => {
           <div className="mt-6">
             <p className="text-lg">
               <span className="font-bold">Category:</span>
-              <span className="uppercase"> {product.category}</span>
+              <span className="uppercase"> {product?.category}</span>
             </p>
-            {product.tags && (
+            {product?.tags && (
               <p className="text-lg mt-2 text-blue-500">
                 <span className="font-bold text-black mr-4">Tags: </span>
-                {product.tags.join(", ")}
+                {product?.tags.join(", ")}
               </p>
             )}
             <button

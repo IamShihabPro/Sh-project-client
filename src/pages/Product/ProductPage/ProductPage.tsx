@@ -20,7 +20,7 @@ const ProductPage = () => {
                 {/* Product Listing Section */}
                 <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {data?.data?.map((product: TProduct) => (
-                        <ProductCard key={product._id} product={product} />
+                        <ProductCard key={product?._id} product={product} />
                     ))}
                 </div>
             </div>

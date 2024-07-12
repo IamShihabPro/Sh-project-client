@@ -23,15 +23,17 @@ const productApi = baseApi.injectEndpoints({
         url: `products/${id}`,
       })
     }),
-    updateProduct: builder.mutation({
-      query: ({ _id, ratings }) => ({
-        method: 'PUT',
-        url: `products/${_id}`,
-        body: { ratings }
-      }),
+    addRatings: builder.mutation({
+      query: ({ _id, rating }) => {
+        return {
+          method: 'PUT',
+          url: `products/ratings/${_id}`,
+          body: { rating }
+        };
+      },
       invalidatesTags: ['products'],
-    }),
+    }),    
   }),
 });
 
-export const { useGetProductQuery, useAddProductMutation, useGetSingleProductQuery, useUpdateProductMutation } = productApi;
+export const { useGetProductQuery, useAddProductMutation, useGetSingleProductQuery, useAddRatingsMutation } = productApi;

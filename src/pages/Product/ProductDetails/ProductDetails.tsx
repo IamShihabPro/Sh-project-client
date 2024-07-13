@@ -6,12 +6,16 @@ import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
+import { TProduct } from "@/types/productType";
+import { useAddCartMutation } from "@/redux/feature/cart/cartApi";
+import { toast } from "sonner";
 
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleProductQuery(id as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addCart] = useAddCartMutation()
 
   if (isLoading) {
     return <Loader />;
@@ -35,6 +39,21 @@ const ProductDetails = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleAddToCart = async (product: TProduct) =>{
+    const cartPayload = {
+      productId: product._id,
+    };
+    try {
+      const res = await addCart(cartPayload).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+      console.log(res)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className="container mx-auto p-4 mt-28">
@@ -60,7 +79,7 @@ const ProductDetails = () => {
             <p className="text-2xl text-red-500 font-bold">${product?.price}</p>
           </div>
 
-          <button className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6">
+          <button onClick={()=> handleAddToCart(product)} className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6">
             Add To Cart
           </button>
 

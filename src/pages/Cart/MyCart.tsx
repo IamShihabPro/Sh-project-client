@@ -137,7 +137,20 @@ const MyCart = () => {
                     )}
                 </>
             ) : (
-                <h1 className="text-2xl font-bold">No Items in Cart</h1>
+                <div className="flex flex-col justify-center items-center mt-20 space-y-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 12l4 4 4-4M12 8v8" />
+                    </svg>
+                    <h1 className="text-4xl font-bold text-gray-700">Your Bag is Empty</h1>
+                    <p className="text-lg text-gray-500">Continue shopping and add items to your bag</p>
+                    <button
+                        onClick={handleCheckout}
+                        className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:from-teal-500 hover:to-blue-500 transition duration-300 ease-in-out"
+                    >
+                        Shop Now
+                    </button>
+                </div>
             )}
         </div>
     );

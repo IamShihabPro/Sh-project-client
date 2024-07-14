@@ -1,7 +1,8 @@
 import App from "@/App";
 import AddProduct from "@/pages/AddProduct/AddProduct";
 import AllProduct from "@/pages/AllProduct/AllProduct";
-import AllCart from "@/pages/Cart/AllCart";
+// import AllCart from "@/pages/Cart/AllCart";
+import MyCart from "@/pages/Cart/MyCart";
 import Home from "@/pages/Home/Home";
 import Management from "@/pages/Management/Management";
 import ProductDetails from "@/pages/Product/ProductDetails/ProductDetails";
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/cart',
-          element: <AllCart/>
+          element: <MyCart/>
         },
       ]
     },

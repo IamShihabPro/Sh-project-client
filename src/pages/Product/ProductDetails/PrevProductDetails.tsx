@@ -7,20 +7,15 @@ import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import { TProduct } from "@/types/productType";
-// import { useAddCartMutation } from "@/redux/feature/cart/cartApi";
+import { useAddCartMutation } from "@/redux/feature/cart/cartApi";
 import { toast } from "sonner";
-import { addToCart } from "@/redux/feature/cart/cartSlice";
-// import { useDispatch } from "react-redux";
-import { TCart } from "@/types/cartType";
-import { useAppDispatch } from "@/redux/hooks";
 
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleProductQuery(id as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [addCart] = useAddCartMutation()
-  const dispatch = useAppDispatch();
+  const [addCart] = useAddCartMutation()
 
   if (isLoading) {
     return <Loader />;
@@ -45,33 +40,20 @@ const ProductDetails = () => {
     setIsModalOpen(false);
   };
 
-  // const handleAddToCart = async (product: TProduct) =>{
-  //   const cartPayload = {
-  //     productId: product._id,
-  //   };
-  //   try {
-  //     const res = await addCart(cartPayload).unwrap();
-  //     if (res?.success) {
-  //       toast.success(res?.message);
-  //     }
-  //     console.log(res)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  const handleAddToCart = (product: TProduct) => {
-    const cartItem: TCart = {
+  const handleAddToCart = async (product: TProduct) =>{
+    const cartPayload = {
       productId: product._id,
-      name: product.name,
-      category: product.category,
-      price: product.price,
-      image: product.image,
-      quantity: 1
     };
-    dispatch(addToCart(cartItem));
-    toast.success("Item added to cart");
-  };
+    try {
+      const res = await addCart(cartPayload).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+      console.log(res)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className="container mx-auto p-4 mt-28">

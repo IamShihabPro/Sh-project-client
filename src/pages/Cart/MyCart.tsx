@@ -90,12 +90,12 @@ const MyCart = () => {
                         </table>
                     </div>
                     <div className="text-center mt-4">
-                        <button
+                        <Link to='/checkout'
                             onClick={handleCheckout}
                             className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6"
                         >
                             Proceed to Checkout
-                        </button>
+                        </Link>
                     </div>
                     {editingItem && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

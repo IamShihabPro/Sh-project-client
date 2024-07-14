@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
-import { TProduct } from "@/types/productType";
+import { TProduct, TVariant } from "@/types/productType";
 // import { useAddCartMutation } from "@/redux/feature/cart/cartApi";
 import { toast } from "sonner";
 import { addToCart } from "@/redux/feature/cart/cartSlice";
@@ -34,7 +34,6 @@ const ProductDetails = () => {
     const sumRatings = ratings.reduce((acc, curr) => acc + curr.rating, 0);
     return totalRatings ? (sumRatings / totalRatings) : 0;
   };
-  // console.log(product.ratings.length)
   const averageRating = calculateAverageRating(product?.ratings);
 
   const handleOpenModal = () => {
@@ -76,19 +75,36 @@ const ProductDetails = () => {
   return (
     <div className="container mx-auto p-4 mt-28">
       <div className="flex flex-col lg:flex-row gap-10">
-        <div className="lg:w-1/2 flex justify-center items-center">
+        <div className="lg:w-1/2 flex flex-col justify-center items-center">
           <img
             src={product?.image}
             alt={product?.name}
-            className="w-full h-auto object-cover rounded-lg shadow-lg max-w-lg"
+            className="w-full h-auto object-cover shadow-lg max-w-lg"
           />
+          <div>
+          {product?.variants?.length > 0 && (
+                        <div className="mt-6">
+                            <h2 className="text-xl font-bold mb-2"></h2>
+                            <div className="flex gap-2">
+                                {product?.variants?.slice(0,4)?.map((variant : TVariant, index: number) => (
+                                    <img
+                                        key={index}
+                                        src={variant.image}
+                                        alt={`Variant ${index + 1}`}
+                                        className="w-16 h-16 object-cover  shadow-sm"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+          </div>
         </div>
 
         <div className="lg:w-1/2 flex flex-col justify-center p-6 bg-white rounded-lg shadow-sm">
           <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
 
           <p className="text-gray-700 mb-6">{product?.description}</p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <Rating style={{ maxWidth: 70 }} value={averageRating} readOnly />
             <span className="text-gray-500">({product?.ratings.length})</span>
           </div>

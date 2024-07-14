@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react';
-import Loader from '@/component/Loader/Loader';
-import { TProduct } from '@/types/productType';
-
-interface FilterProps {
+interface TFilter {
     categories: string[];
     selectedCategory: string;
     setSelectedCategory: (category: string) => void;
@@ -20,7 +16,7 @@ const Filter = ({
     setMinPriceFilter,
     maxPriceFilter,
     setMaxPriceFilter
-}: FilterProps) => {
+}: TFilter) => {
     return (
         <div className="p-6 bg-white shadow-lg rounded-lg transition-transform duration-300 ease-in-out hover:shadow-xl max-w-xs mx-auto sm:max-w-md lg:max-w-lg">
             {/* Category Filter */}

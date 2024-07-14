@@ -11,9 +11,6 @@ const ProductPage = () => {
     const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(100);
 
-    if (isLoading) {
-        return <Loader />;
-    }
 
     const products = data?.data as TProduct[] || [];
 
@@ -25,6 +22,11 @@ const ProductPage = () => {
             return matchesCategory && matchesPrice;
         });
     }, [products, selectedCategory, minPriceFilter, maxPriceFilter]);
+
+    
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <div className="max-w-screen-2xl mx-auto mt-28">

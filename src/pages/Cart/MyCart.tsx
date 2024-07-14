@@ -117,7 +117,7 @@ const MyCart = () => {
                                         </button>
                                         <button
                                             onClick={() => setEditingItem(null)}
-                                            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+                                            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
                                         >
                                             Cancel
                                         </button>
@@ -127,7 +127,7 @@ const MyCart = () => {
                         )}
                     </>
                 ) : (
-                    <h1 className="text-2xl text-center font-bold mx-4">You don't have any products in your cart</h1>
+                    <h1 className="text-2xl font-bold">No Items in Cart</h1>
                 )
             }
         </div>

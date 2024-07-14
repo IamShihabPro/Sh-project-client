@@ -5,6 +5,7 @@ import { RootState } from "@/redux/store";
 import { TCart } from "@/types/cartType";
 import { removeFromCart, updateCartQuantity } from "@/redux/feature/cart/cartSlice";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 
 const MyCart = () => {
@@ -143,12 +144,11 @@ const MyCart = () => {
                     <HiOutlineShoppingBag className="w-24 h-24 text-gray-500"/>
                     <h1 className="text-4xl font-bold text-gray-700 text-center">Your Bag is Empty</h1>
                     <p className="text-lg text-gray-500 text-center">Continue shopping and add items to your bag</p>
-                    <button
-                        onClick={handleCheckout}
+                    <Link to='/products' 
                         className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:from-teal-500 hover:to-blue-500 transition duration-300 ease-in-out"
                     >
                         Shop Now
-                    </button>
+                    </Link>
                 </div>
             )}
         </div>

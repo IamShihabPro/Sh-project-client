@@ -10,20 +10,27 @@ const ProductPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(100);
-
+    const [sortOrder, setSortOrder] = useState<string>('lowToHigh');
 
     const products = data?.data as TProduct[] || [];
 
-    // Filter products based on selected category and price range
+    // Filter and sort products based on selected criteria
     const filteredProducts = useMemo(() => {
-        return products.filter(product => {
+        let filtered = products.filter(product => {
             const matchesCategory = selectedCategory === '' || product.category === selectedCategory;
             const matchesPrice = product.price >= minPriceFilter && product.price <= maxPriceFilter;
             return matchesCategory && matchesPrice;
         });
-    }, [products, selectedCategory, minPriceFilter, maxPriceFilter]);
 
-    
+        if (sortOrder === 'lowToHigh') {
+            filtered = filtered.sort((a, b) => a.price - b.price);
+        } else if (sortOrder === 'highToLow') {
+            filtered = filtered.sort((a, b) => b.price - a.price);
+        }
+
+        return filtered;
+    }, [products, selectedCategory, minPriceFilter, maxPriceFilter, sortOrder]);
+
     if (isLoading) {
         return <Loader />;
     }
@@ -42,6 +49,8 @@ const ProductPage = () => {
                         setMinPriceFilter={setMinPriceFilter}
                         maxPriceFilter={maxPriceFilter}
                         setMaxPriceFilter={setMaxPriceFilter}
+                        sortOrder={sortOrder}
+                        setSortOrder={setSortOrder}
                     />
                 </div>
 

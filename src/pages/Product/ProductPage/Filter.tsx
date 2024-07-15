@@ -6,6 +6,8 @@ interface TFilter {
     setMinPriceFilter: (price: number) => void;
     maxPriceFilter: number;
     setMaxPriceFilter: (price: number) => void;
+    sortOrder: string;
+    setSortOrder: (order: string) => void;
 }
 
 const Filter = ({
@@ -15,15 +17,17 @@ const Filter = ({
     minPriceFilter,
     setMinPriceFilter,
     maxPriceFilter,
-    setMaxPriceFilter
+    setMaxPriceFilter,
+    sortOrder,
+    setSortOrder
 }: TFilter) => {
     return (
-        <div className="p-6 bg-white shadow-lg rounded-lg transition-transform duration-300 ease-in-out hover:shadow-xl max-w-xs mx-auto sm:max-w-md lg:max-w-lg">
+        <div className="p-8 bg-white shadow-lg rounded-lg transition-transform duration-300 ease-in-out hover:shadow-2xl max-w-xs mx-auto sm:max-w-md lg:max-w-lg">
             {/* Category Filter */}
-            <div className="mb-6">
-                <label className="block mb-3 font-semibold text-xl text-gray-800">Category</label>
+            <div className="mb-8">
+                <label className="block mb-2 font-semibold text-2xl text-gray-800">Category</label>
                 <select
-                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200 hover:bg-gray-50"
+                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200 hover:bg-gray-50"
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                 >
@@ -35,9 +39,9 @@ const Filter = ({
             </div>
 
             {/* Price Range Filter */}
-            <div className="mb-6">
-                <label className="block mb-3 font-semibold text-xl text-gray-800">Price Range</label>
-                <div className="flex flex-col space-y-4">
+            <div className="mb-8">
+                <label className="block mb-2 font-semibold text-2xl text-gray-800">Price Range</label>
+                <div className="flex flex-col space-y-6">
                     <div className="flex items-center justify-between">
                         <span className="text-gray-600">${minPriceFilter}</span>
                         <input
@@ -45,7 +49,7 @@ const Filter = ({
                             min="0"
                             max="100"
                             step="1"
-                            className="w-full mx-2 accent-indigo-500 hover:cursor-pointer"
+                            className="w-full mx-4 accent-indigo-500 hover:cursor-pointer"
                             value={minPriceFilter}
                             onChange={e => setMinPriceFilter(parseInt(e.target.value))}
                         />
@@ -58,12 +62,25 @@ const Filter = ({
                             min="0"
                             max="100"
                             step="1"
-                            className="w-full mx-2 accent-indigo-500 hover:cursor-pointer"
+                            className="w-full mx-4 accent-indigo-500 hover:cursor-pointer"
                             value={maxPriceFilter}
                             onChange={e => setMaxPriceFilter(parseInt(e.target.value))}
                         />
                     </div>
                 </div>
+            </div>
+
+            {/* Sort Order Filter */}
+            <div className="mb-8">
+                <label className="block mb-2 font-semibold text-2xl text-gray-800">Sort By</label>
+                <select
+                    className="w-full p-4 border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200 hover:bg-gray-50"
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                >
+                    <option value="lowToHigh">Low to High</option>
+                    <option value="highToLow">High to Low</option>
+                </select>
             </div>
         </div>
     );

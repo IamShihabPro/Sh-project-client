@@ -3,6 +3,7 @@ import CategoryPage from "../Product/CategoryPage/CategoryPage";
 import CarouselPlugin from "../../component/Carousel/Carousel";
 import Footer from "@/component/Footer/Footer";
 import FaqAsk from "@/component/FaqAsk/FaqAsk";
+import UniqueSection from "@/component/UniqueSection/UniqueSection";
 
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
             <CarouselPlugin/>
             <Discover/>
             <CategoryPage/>
+            <UniqueSection/>
             <FaqAsk/>
             <Footer/>
         </div>

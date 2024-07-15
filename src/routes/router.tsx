@@ -1,4 +1,5 @@
 import App from "@/App";
+import AboutUs from "@/pages/About/AboutUs";
 import AddProduct from "@/pages/AddProduct/AddProduct";
 import AllProduct from "@/pages/AllProduct/AllProduct";
 // import AllCart from "@/pages/Cart/AllCart";
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
         {
           path: '/checkout',
           element: <CheckoutPage/>
+        },
+        {
+          path: '/about',
+          element: <AboutUs/>
         },
       ]
     },

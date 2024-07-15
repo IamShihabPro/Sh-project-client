@@ -52,7 +52,7 @@ const RecommendedProductsSection = () => {
       </div>
       <div className="text-center mt-8">
         <Link to="/products">
-          <button className="px-6 py-2 bg-black text-white rounded-md hover:bg-blue-600 transition duration-300">
+          <button className="px-6 py-2 bg-black text-white hover:bg-blue-600 transition duration-300">
             View More
           </button>
         </Link>

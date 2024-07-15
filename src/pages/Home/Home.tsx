@@ -5,6 +5,7 @@ import Footer from "@/component/Footer/Footer";
 import FaqAsk from "@/component/FaqAsk/FaqAsk";
 import UniqueSection from "@/component/UniqueSection/UniqueSection";
 import RecommendedProductsSection from "@/component/RecommendedProducts/RecommendedProducts";
+import CategorySection from "@/component/CategorySection/CategorySection";
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <div>
             <CarouselPlugin/>
             <RecommendedProductsSection/>
+            <CategorySection/>
             <Discover/>
             <CategoryPage/>
             <UniqueSection/>

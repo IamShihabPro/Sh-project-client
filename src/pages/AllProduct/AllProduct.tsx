@@ -1,23 +1,32 @@
+import { useState } from 'react';
 import Loader from "@/component/Loader/Loader";
-import { useDeleteProductMutation, useGetProductQuery } from "@/redux/feature/product/productApi";
+import { useDeleteProductMutation, useGetProductQuery, useUpdateProductMutation } from "@/redux/feature/product/productApi";
 import { TProduct } from "@/types/productType";
 import { toast } from "sonner";
+import UpdateProductModal from './UpdateProductModal';
 
 const AllProduct = () => {
     const { data, isLoading } = useGetProductQuery(undefined);
     const [deleteProduct] = useDeleteProductMutation();
+    const [updateProduct] = useUpdateProductMutation();
+
+    const [selectedProduct, setSelectedProduct] = useState<TProduct | null>(null);
+    const [isModalOpen, setModalOpen] = useState(false);
     const products = data?.data as TProduct[] || [];
 
     const handleEdit = (product: TProduct) => {
-        // Implement your edit functionality here
+        setSelectedProduct(product);
+        setModalOpen(true);
     };
+
+    console.log(selectedProduct)
 
     const handleDelete = async (productId: string) => {
         if (productId) {
             const confirmDelete = window.confirm("Are you sure you want to delete this product?");
             if (confirmDelete) {
                 try {
-                    const res = await deleteProduct(productId).unwrap(); // Correctly using the function
+                    const res = await deleteProduct(productId).unwrap();
                     if (res?.success) {
                         toast.success(res?.message);
                     }
@@ -29,12 +38,25 @@ const AllProduct = () => {
         }
     };
 
+    const handleUpdateProduct = async (updatedProduct: TProduct) => {
+        try {
+            const res = await updateProduct({ id: selectedProduct!._id, ...updatedProduct }).unwrap();
+            if (res?.success) {
+                toast.success("Product updated successfully!");
+                setModalOpen(false);
+            }
+        } catch (error) {
+            toast.error("Failed to update the product. Please try again.");
+            console.error(error);
+        }
+    };
+
     if (isLoading) {
         return <Loader />;
     }
 
     return (
-        <div className="max-w-screen-2xl mx-auto mt-24">
+        <div className="max-w-screen-2xl mx-auto mt-10">
             {products.length > 0 ? (
                 <>
                     <h1 className="text-2xl text-center font-bold mb-4">All Products</h1>
@@ -57,7 +79,7 @@ const AllProduct = () => {
                                         </td>
                                         <td className="py-2 px-4 border">{product.name}</td>
                                         <td className="py-2 px-4 border">{product.category}</td>
-                                        <td className="py-2 px-4 border">${product.price}</td>
+                                        <td className="py-2 px-4 border">${product.price.toFixed(2)}</td>
                                         <td className="py-2 px-4 border">
                                             <button
                                                 onClick={() => handleEdit(product)}
@@ -83,6 +105,15 @@ const AllProduct = () => {
                     <h1 className="text-4xl font-bold text-gray-700 text-center">No Products Available</h1>
                     <p className="text-lg text-gray-500 text-center">Please add some products to display</p>
                 </div>
+            )}
+
+            {selectedProduct && (
+                <UpdateProductModal
+                    product={selectedProduct}
+                    isOpen={isModalOpen}
+                    onClose={() => setModalOpen(false)}
+                    onSubmit={handleUpdateProduct}
+                />
             )}
         </div>
     );

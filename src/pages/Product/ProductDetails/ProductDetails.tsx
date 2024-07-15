@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating';
@@ -11,10 +11,11 @@ import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";
 import Loader from "@/component/Loader/Loader";
 import RatingModal from "@/component/Modal/RatingModal";
 import { toast } from "sonner";
+import Magnifier from './Magnifier';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetSingleProductQuery(id as string);
+  const { data, isLoading, isError } = useGetSingleProductQuery(id as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -22,7 +23,11 @@ const ProductDetails = () => {
     return <Loader />;
   }
 
-  const product = data?.data;
+  if (isError || !data) {
+    return <p>Failed to load product details.</p>;
+  }
+
+  const product = data.data;
 
   const calculateAverageRating = (ratings: { rating: number }[]) => {
     const totalRatings = ratings.length;
@@ -52,11 +57,7 @@ const ProductDetails = () => {
     <div className="container mx-auto p-4 mt-28">
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="lg:w-1/2 flex flex-col items-center mx-2">
-          <img
-            src={product?.image}
-            alt={product?.name}
-            className="w-full h-auto object-cover shadow-lg max-w-lg"
-          />
+          <Magnifier src={product?.image} alt={product?.name} zoom={3} />
           {product?.variants?.length > 0 && (
             <div className="mt-6 mx-auto">
               <div className="flex gap-2 p-2 justify-center items-center mx-2">
@@ -115,6 +116,7 @@ const ProductDetails = () => {
             <button
               onClick={handleCloseModal}
               className="absolute top-2 right-2 text-gray-500"
+              aria-label="Close Modal"
             >
               <IoMdClose className="w-6 h-6" />
             </button>

@@ -1,4 +1,3 @@
-// import { useAddProductMutation } from '@/redux/api/baseApi';
 import { useAddProductMutation } from '@/redux/feature/product/productApi';
 import React from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
@@ -27,7 +26,7 @@ type TProduct = {
 
 const ProductForm: React.FC<{ product?: TProduct }> = () => {
 
-  const [addProduct] = useAddProductMutation()
+  const [addProduct] = useAddProductMutation();
     
   const { register, control, handleSubmit, formState: { errors } } = useForm<TProduct>({
   });
@@ -51,9 +50,9 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
       if (res?.success) {
         toast.success(res?.message);
       }
-      console.log(res)
+      console.log(res);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
@@ -81,8 +80,11 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-medium text-gray-700">Price</label>
           <input
-            type="number"
-            {...register('price', { required: 'Price is required' })}
+            type="text"
+            {...register('price', { 
+              required: 'Price is required', 
+              validate: value => !isNaN(parseFloat(value)) || 'Price must be a number'
+            })}
             className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           {errors.price && <span className="mt-1 text-red-500 text-sm">{errors.price.message}</span>}
@@ -101,32 +103,30 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">Tags</label>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
-            {tagFields.map((field, index) => (
+          {tagFields.map((field, index) => (
             <div key={field.id} className="flex-grow relative mb-2 sm:mb-0">
-                <input
+              <input
                 {...register(`tags.${index}`, { required: 'Tag is required' })}
                 className="w-full p-3 border border-gray-300 rounded-sm shadow-sm pr-12"
-                />
-                <button 
+              />
+              <button 
                 type="button" 
                 onClick={() => removeTag(index)} 
                 className="absolute right-2 top-2 p-2 text-gray-800 font-bold"
-                >
+              >
                 <ImCross/>
-                </button>
+              </button>
             </div>
-            ))}
+          ))}
         </div>
         <button 
-            type="button" 
-            onClick={() => appendTag('')} 
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-sm shadow-md hover:bg-blue-600"
+          type="button" 
+          onClick={() => appendTag('')} 
+          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-sm shadow-md hover:bg-blue-600"
         >
-            Add Tag
+          Add Tag
         </button>
-        </div>
-
-
+      </div>
 
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">Image</label>
@@ -140,8 +140,11 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-700">Inventory Quantity</label>
         <input
-          type="number"
-          {...register('inventory.quantity', { required: 'Inventory quantity is required' })}
+          type="text"
+          {...register('inventory.quantity', { 
+            required: 'Inventory quantity is required',
+            validate: value => !isNaN(parseFloat(value)) || 'Quantity must be a number'
+          })}
           className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
         />
         {errors.inventory?.quantity && <span className="text-red-500 text-sm">{errors.inventory.quantity.message}</span>}
@@ -165,16 +168,23 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
               className="w-full p-3 border border-gray-300 rounded-sm shadow-sm"
             />
             <button type="button" onClick={() => removeVariant(index)} className="px-3 py-2 text-black">
-            <ImCross/>
+              <ImCross/>
             </button>
           </div>
         ))}
-        <button type="button" onClick={() => appendVariant({ image: '' })} className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600">
+        <button 
+          type="button" 
+          onClick={() => appendVariant({ image: '' })} 
+          className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600"
+        >
           Add More Image
         </button>
       </div>
 
-      <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-sm shadow-md hover:bg-indigo-600 w-full">
+      <button 
+        type="submit" 
+        className="px-4 py-2 bg-indigo-600 text-white rounded-sm shadow-md hover:bg-indigo-600 w-full"
+      >
         Submit
       </button>
     </form>

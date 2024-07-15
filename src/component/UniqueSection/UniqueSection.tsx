@@ -1,4 +1,3 @@
-import React from 'react';
 
 type Testimonial = {
   name: string;
@@ -33,7 +32,7 @@ const UniqueSection = () => {
       <h2 className="text-4xl text-center font-bold my-10 text-gray-800">What Our Customers Say</h2>
       <div className="container mx-auto flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
         {testimonials.map((testimonial, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+          <div key={index} className="bg-white p-6 shadow-md flex flex-col items-center text-center">
             <img
               src={testimonial.image}
               alt={testimonial.name}

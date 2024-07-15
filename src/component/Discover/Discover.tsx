@@ -3,7 +3,7 @@ const Discover = () => {
     return (
        <div className='my-10'>
             <div className='mb-10'>
-                <h1 className='text-center font-bold text-4xl'>We Live To Discover</h1>
+                <h1 className='text-center font-bold text-4xl text-gray-800'>We Live To Discover</h1>
             </div>
              <div className=' bg-gray-200'>
            

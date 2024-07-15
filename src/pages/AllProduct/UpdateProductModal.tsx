@@ -54,8 +54,9 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
     }, [product]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value, type } = e.target;
         if (type === 'checkbox') {
+            const checked = (e.target as HTMLInputElement).checked;
             setFormValues(prev => ({
                 ...prev,
                 inventory: {
@@ -203,37 +204,33 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                     </div>
 
                     {/* Tags */}
-                    {formValues.tags.length > 0 && (
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-700">Tags</label>
-                            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
-                                {formValues.tags.map((tag, index) => (
-                                    <div key={index} className="flex-grow relative mb-2 sm:mb-0">
-                                        <input
-                                            name={`tags.${index}`}
-                                            value={tag}
-                                            onChange={handleChange}
-                                            className="w-full p-3 border border-gray-300 rounded-sm pr-12"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => handleRemoveTag(index)}
-                                            className="absolute right-2 top-2 p-2 text-gray-800 font-bold"
-                                        >
-                                            <ImCross />
-                                        </button>
-                                    </div>
-                                ))}
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Tags</label>
+                        {formValues.tags.map((tag, index) => (
+                            <div key={index} className="flex-grow relative mb-2">
+                                <input
+                                    name={`tags.${index}`}
+                                    value={tag}
+                                    onChange={handleChange}
+                                    className="w-full p-3 border border-gray-300 rounded-sm pr-12"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveTag(index)}
+                                    className="absolute right-2 top-2 p-2 text-gray-800 font-bold"
+                                >
+                                    <ImCross />
+                                </button>
                             </div>
-                        </div>
-                    )}
-                    <button
-                        type="button"
-                        onClick={handleAddTag}
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-sm shadow-md hover:bg-blue-600"
-                    >
-                        Add Tag
-                    </button>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={handleAddTag}
+                            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-sm shadow-md hover:bg-blue-600"
+                        >
+                            Add Tag
+                        </button>
+                    </div>
 
                     {/* Image */}
                     <div>
@@ -273,35 +270,33 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                     </div>
 
                     {/* Variants */}
-                    {formValues.variants.length > 0 && (
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-700">Variants</label>
-                            {formValues.variants.map((variant, index) => (
-                                <div key={index} className="flex items-center space-x-2 mb-2">
-                                    <input
-                                        name={`variants.${index}.image`}
-                                        value={variant.image}
-                                        onChange={handleChange}
-                                        className="w-full p-3 border border-gray-300 rounded-sm"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveVariant(index)}
-                                        className="px-3 py-2 text-black"
-                                    >
-                                        <ImCross />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    <button
-                        type="button"
-                        onClick={handleAddVariant}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600"
-                    >
-                        Add More Image
-                    </button>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Variants</label>
+                        {formValues.variants.map((variant, index) => (
+                            <div key={index} className="flex items-center space-x-2 mb-2">
+                                <input
+                                    name={`variants.${index}.image`}
+                                    value={variant.image}
+                                    onChange={handleChange}
+                                    className="w-full p-3 border border-gray-300 rounded-sm"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveVariant(index)}
+                                    className="px-3 py-2 text-black"
+                                >
+                                    <ImCross />
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={handleAddVariant}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600"
+                        >
+                            Add More Image
+                        </button>
+                    </div>
 
                     <button
                         type="submit"

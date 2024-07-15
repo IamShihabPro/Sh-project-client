@@ -32,6 +32,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                         <span className="text-gray-500">({product?.ratings.length})</span>
                     </div>
                 </div>
+                <Link to={`/products/${product?._id}`} className="text-white bg-black w-full py-2 text-center"> Details</Link>
             </Link>
         </div>
     );

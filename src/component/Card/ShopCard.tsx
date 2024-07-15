@@ -1,4 +1,5 @@
 import { TProduct } from "@/types/productType";
+import { Link } from "react-router-dom";
 
 const ShopCard = ({product}: {product: TProduct}) => {
     return (
@@ -20,6 +21,7 @@ const ShopCard = ({product}: {product: TProduct}) => {
         <div className='flex flex-row items-center justify-between'>
           <div className='font-semibold'>$ {product?.price}</div>
         </div>
+        <Link to={`/products/${product?._id}`} className="text-white bg-black w-full py-2 text-center"> Details</Link>
       </div>
     </div>
     );

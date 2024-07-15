@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating';
@@ -86,7 +86,7 @@ const ProductDetails = () => {
           </div>
           <button
             onClick={() => handleAddToCart(product)}
-            className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6"
+            className="bg-white text-gray-600 px-6 py-3 text-lg border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6"
           >
             Add To Cart
           </button>
@@ -103,7 +103,7 @@ const ProductDetails = () => {
             )}
             <button
               onClick={handleOpenModal}
-              className="mt-4 text-center font-medium bg-gray-700 text-white px-4 py-2"
+              className="mt-6 text-center font-medium bg-gray-900 text-white px-4 py-2"
             >
               Rate Product
             </button>

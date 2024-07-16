@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 
 const ProductPage = () => {
     const { data, isLoading } = useGetProductQuery(undefined);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(100);
@@ -19,7 +20,8 @@ const ProductPage = () => {
         let filtered = products.filter(product => {
             const matchesCategory = selectedCategory === '' || product.category === selectedCategory;
             const matchesPrice = product.price >= minPriceFilter && product.price <= maxPriceFilter;
-            return matchesCategory && matchesPrice;
+            const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+            return matchesCategory && matchesPrice && matchesSearch;
         });
 
         if (sortOrder === 'lowToHigh') {
@@ -29,7 +31,7 @@ const ProductPage = () => {
         }
 
         return filtered;
-    }, [products, selectedCategory, minPriceFilter, maxPriceFilter, sortOrder]);
+    }, [products, selectedCategory, minPriceFilter, maxPriceFilter, sortOrder, searchTerm]);
 
     if (isLoading) {
         return <Loader />;
@@ -37,28 +39,39 @@ const ProductPage = () => {
 
     return (
         <div className="max-w-screen-2xl mx-auto mt-28">
-            <h1 className="font-bold text-3xl text-center mb-10">Shop By Category</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4">
-                {/* Filter Section */}
-                <div className="lg:col-span-1">
-                    <Filter 
-                        categories={Array.from(new Set(products.map(product => product.category)))}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
-                        minPriceFilter={minPriceFilter}
-                        setMinPriceFilter={setMinPriceFilter}
-                        maxPriceFilter={maxPriceFilter}
-                        setMaxPriceFilter={setMaxPriceFilter}
-                        sortOrder={sortOrder}
-                        setSortOrder={setSortOrder}
-                    />
-                </div>
+            <h1 className="font-bold text-3xl text-center mb-6">All Products</h1>
 
-                {/* Product Listing Section */}
-                <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {filteredProducts.map((product: TProduct) => (
-                        <ProductCard key={product?._id} product={product} />
-                    ))}
+            <div className="container mx-auto py-6 px-4 mb-8">
+                    {/* <h1 className="text-center text-2xl my-4 font-bold text-gray-500">Find a Products</h1> */}
+                    <div className="max-w-xl text-center mx-auto bg-gray-800 py-3 rounded-lg flex items-center justify-between px-3 gap-0">
+                        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}  type="search" className="py-3 px-4 w-full focus:outline-none bg-gray-50 placeholder:text-gray-500" placeholder="Search Product" />
+                        <button className="btn px-4 py-3 bg-white text-gray-900 font-bold">Search</button>
+                    </div>
+            </div>
+
+            <div>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4">
+                    {/* Filter Section */}
+                    <div className="lg:col-span-1">
+                        <Filter 
+                            categories={Array.from(new Set(products.map(product => product.category)))}
+                            selectedCategory={selectedCategory}
+                            setSelectedCategory={setSelectedCategory}
+                            minPriceFilter={minPriceFilter}
+                            setMinPriceFilter={setMinPriceFilter}
+                            maxPriceFilter={maxPriceFilter}
+                            setMaxPriceFilter={setMaxPriceFilter}
+                            sortOrder={sortOrder}
+                            setSortOrder={setSortOrder}
+                        />
+                    </div>
+
+                    {/* Product Listing Section */}
+                    <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {filteredProducts.map((product: TProduct) => (
+                            <ProductCard key={product?._id} product={product} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

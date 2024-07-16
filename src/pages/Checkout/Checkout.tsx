@@ -5,13 +5,13 @@ import Loader from "@/component/Loader/Loader";
 import { useAddOrderMutation } from "@/redux/feature/order/orderApi";
 import { toast } from "sonner";
 import { clearCart } from "@/redux/feature/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const [addOrder] = useAddOrderMutation();
   const dispatch = useAppDispatch()
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
-  console.log(cartItems)
-
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     userName: "",
     userEmail: "",
@@ -63,15 +63,13 @@ const CheckoutPage = () => {
       if (res?.success) {
         toast.success(res?.message);
         dispatch(clearCart());
-
+        navigate('/')
       } else {
         toast.error("Failed to place order. Please try again.");
       }
     } catch (error) {
       console.error("Error placing order:", error);
-    } finally {
-      setIsSubmitting(false); // Reset submitting state
-    }
+    } 
   };
 
   return (

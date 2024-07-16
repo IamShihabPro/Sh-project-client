@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen } : { isOpen: boolean }) => {
     const location = useLocation();
     const navItems = [
         { id: 1, link: '/management/allProduct', title: 'All Products' },

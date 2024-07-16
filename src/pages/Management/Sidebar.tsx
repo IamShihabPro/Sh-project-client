@@ -5,7 +5,8 @@ const Sidebar = ({ isOpen } : { isOpen: boolean }) => {
     const navItems = [
         { id: 1, link: '/management/allProduct', title: 'All Products' },
         { id: 2, link: '/management/addProduct', title: 'Add Product' },
-        { id: 3, link: '/', title: 'Home' },
+        { id: 3, link: '/management/allBookings', title: 'All Bookings' },
+        { id: 4, link: '/', title: 'Home' },
     ];
 
     return (

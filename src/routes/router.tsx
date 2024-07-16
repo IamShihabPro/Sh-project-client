@@ -1,6 +1,7 @@
 import App from "@/App";
 import AboutUs from "@/pages/About/AboutUs";
 import AddProduct from "@/pages/AddProduct/AddProduct";
+import AllBookings from "@/pages/AllBookings/AllBookings";
 import AllProduct from "@/pages/AllProduct/AllProduct";
 // import AllCart from "@/pages/Cart/AllCart";
 import MyCart from "@/pages/Cart/MyCart";
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
         {
           path: 'allProduct',
           element: <AllProduct/>
+        },
+        {
+          path: 'allBookings',
+          element: <AllBookings/>
         }
       ]
     }

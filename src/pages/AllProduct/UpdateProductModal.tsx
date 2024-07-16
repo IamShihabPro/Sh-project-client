@@ -213,6 +213,7 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                                     value={tag}
                                     onChange={handleChange}
                                     className="w-full p-3 border border-gray-300 rounded-sm pr-12"
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -279,6 +280,7 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                                     value={variant.image}
                                     onChange={handleChange}
                                     className="w-full p-3 border border-gray-300 rounded-sm"
+                                    required
                                 />
                                 <button
                                     type="button"

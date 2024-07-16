@@ -58,7 +58,6 @@ const CheckoutPage = () => {
     
 
     try {
-      console.log(orderData)
       const res = await addOrder(orderData).unwrap();
       if (res?.success) {
         toast.success(res?.message);

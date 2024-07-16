@@ -19,8 +19,6 @@ const AllProduct = () => {
         setModalOpen(true);
     };
 
-    console.log(selectedProduct)
-
     const handleDelete = async (productId: string) => {
         if (productId) {
             const confirmDelete = window.confirm("Are you sure you want to delete this product?");

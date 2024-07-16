@@ -42,9 +42,8 @@ const ProductPage = () => {
             <h1 className="font-bold text-3xl text-center mb-6">All Products</h1>
 
             <div className="container mx-auto py-6 px-4 mb-8">
-                    {/* <h1 className="text-center text-2xl my-4 font-bold text-gray-500">Find a Products</h1> */}
-                    <div className="max-w-xl text-center mx-auto bg-gray-800 py-3 rounded-lg flex items-center justify-between px-3 gap-0">
-                        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}  type="search" className="py-3 px-4 w-full focus:outline-none bg-gray-50 placeholder:text-gray-500" placeholder="Search Product" />
+                    <div className="max-w-xl text-center mx-auto bg-gray-900 py-3 rounded-lg flex items-center justify-between px-3 gap-0">
+                        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}  type="search" className="py-3 px-4 w-full focus:outline-none bg-gray-100 placeholder:text-gray-500" placeholder="Search Product" />
                         <button className="btn px-4 py-3 bg-white text-gray-900 font-bold">Search</button>
                     </div>
             </div>

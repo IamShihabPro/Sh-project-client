@@ -18,8 +18,6 @@ const MyCart = () => {
         return <Loader />;
     }
 
-    console.log(cartItems)
-
     const handleEdit = (item: TCart) => {
         setEditingItem(item);
         setNewQuantity(item.quantity);

@@ -29,7 +29,6 @@ const ProductDetails = () => {
     const sumRatings = ratings.reduce((acc, curr) => acc + curr.rating, 0);
     return totalRatings ? (sumRatings / totalRatings) : 0;
   };
-  // console.log(product.ratings.length)
   const averageRating = calculateAverageRating(product?.ratings);
 
   const handleOpenModal = () => {
@@ -49,7 +48,6 @@ const ProductDetails = () => {
       if (res?.success) {
         toast.success(res?.message);
       }
-      console.log(res)
     } catch (error) {
       console.error(error)
     }

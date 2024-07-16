@@ -44,13 +44,11 @@ const ProductForm: React.FC<{ product?: TProduct }> = () => {
   const onSubmit: SubmitHandler<TProduct> = async (data) => {
     data.price = parseFloat(data.price.toString());
     data.inventory.quantity = parseFloat(data.inventory.quantity.toString());
-    console.log(data);
     try {
       const res = await addProduct(data).unwrap();
       if (res?.success) {
         toast.success(res?.message);
       }
-      console.log(res);
     } catch (error) {
       console.error(error);
     }

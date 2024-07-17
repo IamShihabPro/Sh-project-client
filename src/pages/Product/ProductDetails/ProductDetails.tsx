@@ -80,9 +80,13 @@ const ProductDetails = () => {
             <Rating style={{ maxWidth: 70 }} value={averageRating} readOnly />
             <span className="text-gray-500">({product?.ratings.length})</span>
           </div>
+          <div className="flex items-center mb-4">
+            <p className="text-lg text-gray-500 mr-2">Inventory: </p>
+            <p className="text-lg text-gray-500">{product?.inventory?.quantity}</p>
+          </div>
           <div className="flex items-center mb-6">
-            <p className="text-2xl text-gray-500 font-medium mr-2">Price:</p>
-            <p className="text-2xl text-red-500 font-bold">${product?.price}</p>
+            <p className="text-lg text-gray-500 font-medium mr-2">Price:</p>
+            <p className="text-lg text-red-500 font-bold">${product?.price}</p>
           </div>
           <button
             onClick={() => handleAddToCart(product)}

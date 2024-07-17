@@ -65,19 +65,21 @@ const AllProduct = () => {
                                     <th className="py-2 px-4 border">Image</th>
                                     <th className="py-2 px-4 border">Name</th>
                                     <th className="py-2 px-4 border">Category</th>
+                                    <th className="py-2 px-4 border">Inventory</th>
                                     <th className="py-2 px-4 border">Price</th>
                                     <th className="py-2 px-4 border">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {products.map((product) => (
-                                    <tr key={product._id} className="text-center">
+                                    <tr key={product?._id} className="text-center">
                                         <td className="py-2 px-4 border">
-                                            <img src={product.image} alt={product.name} className="w-16 h-16 object-cover mx-auto"/>
+                                            <img src={product?.image} alt={product?.name} className="w-16 h-16 object-cover mx-auto"/>
                                         </td>
-                                        <td className="py-2 px-4 border">{product.name}</td>
-                                        <td className="py-2 px-4 border">{product.category}</td>
-                                        <td className="py-2 px-4 border">${product.price.toFixed(2)}</td>
+                                        <td className="py-2 px-4 border">{product?.name}</td>
+                                        <td className="py-2 px-4 border">{product?.category}</td>
+                                        <td className="py-2 px-4 border">{product?.inventory?.quantity}</td>
+                                        <td className="py-2 px-4 border">${product?.price.toFixed(2)}</td>
                                         <td className="py-2 px-4 border">
                                             <button
                                                 onClick={() => handleEdit(product)}
@@ -86,7 +88,7 @@ const AllProduct = () => {
                                                 Edit
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(product._id)}
+                                                onClick={() => handleDelete(product?._id)}
                                                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition m-1"
                                             >
                                                 Delete

@@ -6,13 +6,18 @@ import { TCart } from "@/types/cartType";
 import { removeFromCart, updateCartQuantity } from "@/redux/feature/cart/cartSlice";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link } from "react-router-dom";
-
+import { useGetProductQuery } from "@/redux/feature/product/productApi";
+import { TProduct } from "@/types/productType";
 
 const MyCart = () => {
     const dispatch = useAppDispatch();
     const cartItems = useAppSelector((state: RootState) => state.cart.items);
     const [editingItem, setEditingItem] = useState<TCart | null>(null);
     const [newQuantity, setNewQuantity] = useState<number>(1);
+    const { data } = useGetProductQuery(undefined);
+    const products = data?.data as TProduct[] || [];
+
+    const productMap = new Map(products.map(product => [product._id, product]));
 
     if (!cartItems) {
         return <Loader />;
@@ -39,8 +44,13 @@ const MyCart = () => {
     };
 
     const handleCheckout = () => {
-        // Implement your checkout logic here
         alert("Proceeding to checkout...");
+    };
+
+    const calculateTotalCost = () => {
+        return cartItems.reduce((total, item) => {
+            return total + (item.price * item.quantity);
+        }, 0);
     };
 
     return (
@@ -89,7 +99,10 @@ const MyCart = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className="text-right my-4 pr-4">
+                        <h2 className="text-xl font-bold text-center">Total Cost: ${calculateTotalCost().toFixed(2)}</h2>
+                    </div>
+                    <div className="text-center my-4">
                         <Link to='/checkout'
                             onClick={handleCheckout}
                             className="bg-white text-gray-600 px-6 py-3 text-lg rounded-sm border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6"
@@ -117,6 +130,7 @@ const MyCart = () => {
                                     <button
                                         onClick={() => handleQuantityChange(1)}
                                         className="bg-white border-2 border-gray-300 text-black px-4 py-2 transition transform hover:scale-105"
+                                        disabled={editingItem && productMap.get(editingItem.productId)?.inventory?.quantity !== undefined && productMap?.get(editingItem?.productId)?.inventory?.quantity <= newQuantity}
                                     >
                                         +
                                     </button>

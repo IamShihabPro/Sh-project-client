@@ -5,8 +5,8 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import { TProduct, TVariant } from "@/types/productType";
 import { TCart } from "@/types/cartType";
-import { useAppDispatch } from "@/redux/hooks";
-import { addToCart } from "@/redux/feature/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart, updateCartQuantity } from "@/redux/feature/cart/cartSlice";
 import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";
 import Loader from "@/component/Loader/Loader";
 import RatingModal from "@/component/Modal/RatingModal";
@@ -18,39 +18,55 @@ const ProductDetails = () => {
   const { data, isLoading, isError } = useGetSingleProductQuery(id as string);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(state => state.cart.items);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError || !data) {
+  if (isLoading) return <Loader />;
+  if (isError) {
+    console.error("Error loading product:", isError);
     return <p>Failed to load product details.</p>;
   }
 
-  const product = data.data;
+  const product = data?.data;
 
   const calculateAverageRating = (ratings: { rating: number }[]) => {
-    const totalRatings = ratings.length;
+    if (!ratings.length) return 0;
     const sumRatings = ratings.reduce((acc, curr) => acc + curr.rating, 0);
-    return totalRatings ? (sumRatings / totalRatings) : 0;
+    return sumRatings / ratings.length;
   };
 
-  const averageRating = calculateAverageRating(product?.ratings);
+  const averageRating = calculateAverageRating(product?.ratings || []);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleAddToCart = (product: TProduct) => {
-    const cartItem: TCart = {
-      productId: product._id,
-      name: product.name,
-      category: product.category,
-      price: product.price,
-      image: product.image,
-      quantity: 1
-    };
-    dispatch(addToCart(cartItem));
-    toast.success("Item added to cart");
+    const existingCartItem = cartItems.find(item => item.productId === product._id);
+    const currentQuantity = existingCartItem ? existingCartItem.quantity : 0;
+
+    if (currentQuantity < product.inventory.quantity) {
+      const newQuantity = currentQuantity + 1;
+      if (existingCartItem) {
+        if (newQuantity <= product.inventory.quantity) {
+          dispatch(updateCartQuantity({ id: product._id, quantity: newQuantity }));
+          toast.success("Item quantity updated in cart");
+        } else {
+          toast.error("Cannot add more than available stock");
+        }
+      } else {
+        const cartItem: TCart = {
+          productId: product._id,
+          name: product.name,
+          category: product.category,
+          price: product.price,
+          image: product.image,
+          quantity: 1,
+        };
+        dispatch(addToCart(cartItem));
+        toast.success("Item added to cart");
+      }
+    } else {
+      toast.error("Cannot add more than available stock");
+    }
   };
 
   return (
@@ -59,17 +75,10 @@ const ProductDetails = () => {
         <div className="lg:w-1/2 flex flex-col items-center mx-2">
           <Magnifier src={product?.image} alt={product?.name} zoom={3} />
           {product?.variants?.length > 0 && (
-            <div className="mt-6 mx-auto">
-              <div className="flex gap-2 p-2 justify-center items-center mx-2">
-                {product?.variants?.slice(0, 4).map((variant: TVariant, index: number) => (
-                  <img
-                    key={index}
-                    src={variant.image}
-                    alt={`Variant ${index + 1}`}
-                    className="w-16 h-16 object-cover shadow-sm"
-                  />
-                ))}
-              </div>
+            <div className="mt-6 mx-auto flex gap-2 p-2 justify-center">
+              {product.variants.slice(0, 4).map((variant: TVariant, index: number) => (
+                <img key={index} src={variant.image} alt={`Variant ${index + 1}`} className="w-16 h-16 object-cover shadow-sm" />
+              ))}
             </div>
           )}
         </div>
@@ -81,7 +90,7 @@ const ProductDetails = () => {
             <span className="text-gray-500">({product?.ratings.length})</span>
           </div>
           <div className="flex items-center mb-4">
-            <p className="text-lg text-gray-500 mr-2">Inventory: </p>
+            <p className="text-lg text-gray-500 mr-2">Inventory:</p>
             <p className="text-lg text-gray-500">{product?.inventory?.quantity}</p>
           </div>
           <div className="flex items-center mb-6">
@@ -90,25 +99,19 @@ const ProductDetails = () => {
           </div>
           <button
             onClick={() => handleAddToCart(product)}
-            className="bg-white text-gray-600 px-6 py-3 text-lg border border-gray-600 hover:bg-gray-900 hover:text-white transition duration-300 ease-in-out mt-6"
+            disabled={product?.inventory?.quantity <= 0}
+            className={`bg-white text-gray-600 px-6 py-3 text-lg border border-gray-600 transition duration-300 ease-in-out mt-6 ${product?.inventory?.quantity <= 0 ? "cursor-not-allowed opacity-50" : "hover:bg-gray-900 hover:text-white"}`}
           >
             Add To Cart
           </button>
           <div className="mt-6">
-            <p className="text-lg">
-              <span className="font-bold">Category:</span>
-              <span className="uppercase"> {product?.category}</span>
-            </p>
+            <p className="text-lg"><span className="font-bold">Category:</span> <span className="uppercase"> {product?.category}</span></p>
             {product?.tags && (
               <p className="text-lg mt-2 text-blue-500">
-                <span className="font-bold text-black mr-4">Tags: </span>
-                {product?.tags.join(", ")}
+                <span className="font-bold text-black mr-4">Tags:</span> {product?.tags.join(", ")}
               </p>
             )}
-            <button
-              onClick={handleOpenModal}
-              className="mt-6 text-center font-medium bg-gray-900 text-white px-4 py-2"
-            >
+            <button onClick={handleOpenModal} className="mt-6 text-center font-medium bg-gray-900 text-white px-4 py-2">
               Rate Product
             </button>
           </div>
@@ -117,11 +120,7 @@ const ProductDetails = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white px-4 py-6 rounded-lg shadow-lg relative">
-            <button
-              onClick={handleCloseModal}
-              className="absolute top-2 right-2 text-gray-500"
-              aria-label="Close Modal"
-            >
+            <button onClick={handleCloseModal} className="absolute top-2 right-2 text-gray-500" aria-label="Close Modal">
               <IoMdClose className="w-6 h-6" />
             </button>
             <RatingModal product={product} />

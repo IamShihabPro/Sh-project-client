@@ -11,7 +11,7 @@ const ProductPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(100);
-    const [sortOrder, setSortOrder] = useState<string>('lowToHigh');
+    const [sortOrder, setSortOrder] = useState<string>('default');
 
     const products = data?.data as TProduct[] || [];
 
@@ -33,6 +33,15 @@ const ProductPage = () => {
         return filtered;
     }, [products, selectedCategory, minPriceFilter, maxPriceFilter, sortOrder, searchTerm]);
 
+    // Reset filters and sorting
+    const clearFilters = () => {
+        setSearchTerm('');
+        setSelectedCategory('');
+        setMinPriceFilter(0);
+        setMaxPriceFilter(100);
+        setSortOrder('default');
+    };
+
     if (isLoading) {
         return <Loader />;
     }
@@ -42,13 +51,28 @@ const ProductPage = () => {
             <h1 className="font-bold text-3xl text-center mb-6">All Products</h1>
 
             <div className="container mx-auto py-6 px-4 mb-8">
-                    <div className="max-w-xl text-center mx-auto bg-gray-900 py-3 rounded-lg flex items-center justify-between px-3 gap-0">
-                        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}  type="search" className="py-3 px-4 w-full focus:outline-none bg-gray-100 placeholder:text-gray-500" placeholder="Search Product" />
-                        <button className="btn px-4 py-3 bg-white text-gray-900 font-bold">Search</button>
-                    </div>
+                <div className="max-w-xl text-center mx-auto bg-gray-900 py-3 rounded-lg flex items-center justify-between px-3 gap-0">
+                    <input 
+                        value={searchTerm} 
+                        onChange={(e) => setSearchTerm(e.target.value)} 
+                        type="search" 
+                        className="py-3 px-4 w-full focus:outline-none bg-gray-100 placeholder:text-gray-500" 
+                        placeholder="Search Product" 
+                    />
+                    <button className="btn px-4 py-3 bg-white text-gray-900 font-bold">Search</button>
+                </div>
+
             </div>
 
             <div>
+            <div className="text-start m-5">
+                    <button 
+                        className="btn px-4 py-3 bg-black text-white font-bold"
+                        onClick={clearFilters}
+                    >
+                        Clear All Filters
+                    </button>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4">
                     {/* Filter Section */}
                     <div className="lg:col-span-1">

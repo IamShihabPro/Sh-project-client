@@ -6,6 +6,7 @@ import FaqAsk from "@/component/FaqAsk/FaqAsk";
 import UniqueSection from "@/component/UniqueSection/UniqueSection";
 import RecommendedProductsSection from "@/component/RecommendedProducts/RecommendedProducts";
 import CategorySection from "@/component/CategorySection/CategorySection";
+import FeaturedTourGroups from "@/component/FeaturedTourGroups/FeaturedTourGroups";
 
 
 const Home = () => {
@@ -16,8 +17,9 @@ const Home = () => {
             <CategorySection/>
             <Discover/>
             <CategoryPage/>
-            <UniqueSection/>
+            <FeaturedTourGroups/>
             <FaqAsk/>
+            <UniqueSection/>
             <Footer/>
         </div>
     );

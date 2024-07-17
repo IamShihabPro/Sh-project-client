@@ -130,7 +130,7 @@ const MyCart = () => {
                                     <button
                                         onClick={() => handleQuantityChange(1)}
                                         className="bg-white border-2 border-gray-300 text-black px-4 py-2 transition transform hover:scale-105"
-                                        disabled={editingItem && productMap.get(editingItem.productId)?.inventory?.quantity !== undefined && productMap?.get(editingItem?.productId)?.inventory?.quantity <= newQuantity}
+                                        disabled={editingItem && productMap.get(editingItem.productId)?.inventory?.quantity !== undefined && productMap?.get(editingItem?.productId)?.inventory?.quantity! <= newQuantity}
                                     >
                                         +
                                     </button>

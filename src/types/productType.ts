@@ -1,6 +1,6 @@
-export type TVariant = {
-  image: string;
-}
+// export type TVariant = {
+//   image: string;
+// }
   
 export type TInventory = {
   quantity: number;
@@ -17,20 +17,18 @@ export type TProduct = {
   description: string;
   price: number;
   category: string;
-  tags: string[];
-  variants: TVariant[];
+  // tags: string[];
+  // variants: TVariant[];
   inventory: TInventory;
   image: string;
   ratings: TRating[];
   isDeleted: boolean;
 }
 
-  // CartItem extends TProduct to include quantity
 export type CartItem = TProduct & {
   quantity: number;
 }
 
-// Cart state includes an array of CartItems and a total quantity
 export type CartState = {
   items: CartItem[];
   totalQuantity: number;

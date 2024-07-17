@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
-import { TProduct, TVariant } from "@/types/productType";
+import { TProduct } from "@/types/productType";
 import { TCart } from "@/types/cartType";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart, updateCartQuantity } from "@/redux/feature/cart/cartSlice";
@@ -74,13 +74,6 @@ const ProductDetails = () => {
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="lg:w-1/2 flex flex-col items-center mx-2">
           <Magnifier src={product?.image} alt={product?.name} zoom={3} />
-          {product?.variants?.length > 0 && (
-            <div className="mt-6 mx-auto flex gap-2 p-2 justify-center">
-              {product.variants.slice(0, 4).map((variant: TVariant, index: number) => (
-                <img key={index} src={variant.image} alt={`Variant ${index + 1}`} className="w-16 h-16 object-cover shadow-sm" />
-              ))}
-            </div>
-          )}
         </div>
         <div className="lg:w-1/2 flex flex-col p-6 bg-white rounded-lg shadow-sm">
           <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
@@ -106,11 +99,6 @@ const ProductDetails = () => {
           </button>
           <div className="mt-6">
             <p className="text-lg"><span className="font-bold">Category:</span> <span className="uppercase"> {product?.category}</span></p>
-            {product?.tags && (
-              <p className="text-lg mt-2 text-blue-500">
-                <span className="font-bold text-black mr-4">Tags:</span> {product?.tags.join(", ")}
-              </p>
-            )}
             <button onClick={handleOpenModal} className="mt-6 text-center font-medium bg-gray-900 text-white px-4 py-2">
               Rate Product
             </button>

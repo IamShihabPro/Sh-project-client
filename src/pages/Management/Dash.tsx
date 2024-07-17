@@ -1,6 +1,10 @@
 import { FaBars, FaBell, FaSearch } from "react-icons/fa";
+type DashProps = {
+    setIsOpen: (isOpen: boolean) => void;
+    isOpen: boolean;
+};
 
-const Dash = ({setIsOpen, isOpen}) => {
+const Dash: React.FC<DashProps> = ({ setIsOpen, isOpen }) => {
     return (
         <div className={`${isOpen ?'' : ' ml-64' } bg-gray-800 px-4 py-3 flex justify-between w-full`}>
             <div className="flex items-center text-xl">

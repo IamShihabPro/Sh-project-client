@@ -1,4 +1,5 @@
 import App from "@/App";
+import ErrorPage from "@/component/ErrorPage/ErrorPage";
 import AboutUs from "@/pages/About/AboutUs";
 import AddProduct from "@/pages/AddProduct/AddProduct";
 import AllBookings from "@/pages/AllBookings/AllBookings";
@@ -7,6 +8,7 @@ import AllProduct from "@/pages/AllProduct/AllProduct";
 import MyCart from "@/pages/Cart/MyCart";
 import CheckoutPage from "@/pages/Checkout/Checkout";
 import Home from "@/pages/Home/Home";
+import Login from "@/pages/Login/Login";
 import Management from "@/pages/Management/Management";
 import ProductDetails from "@/pages/Product/ProductDetails/ProductDetails";
 import ProductPage from "@/pages/Product/ProductPage/ProductPage";
@@ -16,6 +18,7 @@ export const router = createBrowserRouter([
     {
       path: "/",
       element: <App></App>,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: '/',
@@ -40,6 +43,10 @@ export const router = createBrowserRouter([
         {
           path: '/about',
           element: <AboutUs/>
+        },
+        {
+          path: '/login',
+          element: <Login/>
         },
       ]
     },

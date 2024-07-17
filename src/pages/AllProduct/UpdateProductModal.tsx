@@ -7,8 +7,6 @@ interface IUpdateProductModalProps {
         description: string;
         price: number;
         category: string;
-        tags: string[];
-        variants: { image: string }[];
         inventory: {
             quantity: number;
             inStock: boolean;
@@ -26,8 +24,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
         description: '',
         price: '',
         category: '',
-        tags: [''],
-        variants: [{ image: '' }],
         inventory: {
             quantity: '',
             inStock: false,
@@ -42,8 +38,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                 description: product.description,
                 price: product.price.toFixed(2),
                 category: product.category,
-                tags: product.tags.length ? product.tags : [''],
-                variants: product.variants.length ? product.variants : [{ image: '' }],
                 inventory: {
                     quantity: product.inventory.quantity.toString(),
                     inStock: product.inventory.inStock,
@@ -64,22 +58,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                     inStock: checked,
                 },
             }));
-        } else if (name.startsWith('tags')) {
-            const index = parseInt(name.split('.')[1]);
-            const newTags = [...formValues.tags];
-            newTags[index] = value;
-            setFormValues(prev => ({
-                ...prev,
-                tags: newTags,
-            }));
-        } else if (name.startsWith('variants')) {
-            const index = parseInt(name.split('.')[1]);
-            const newVariants = [...formValues.variants];
-            newVariants[index] = { image: value };
-            setFormValues(prev => ({
-                ...prev,
-                variants: newVariants,
-            }));
         } else if (name.startsWith('inventory')) {
             setFormValues(prev => ({
                 ...prev,
@@ -94,36 +72,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                 [name]: value,
             }));
         }
-    };
-
-    const handleAddTag = () => {
-        setFormValues(prev => ({
-            ...prev,
-            tags: [...prev.tags, ''],
-        }));
-    };
-
-    const handleRemoveTag = (index: number) => {
-        const newTags = formValues.tags.filter((_, i) => i !== index);
-        setFormValues(prev => ({
-            ...prev,
-            tags: newTags,
-        }));
-    };
-
-    const handleAddVariant = () => {
-        setFormValues(prev => ({
-            ...prev,
-            variants: [...prev.variants, { image: '' }],
-        }));
-    };
-
-    const handleRemoveVariant = (index: number) => {
-        const newVariants = formValues.variants.filter((_, i) => i !== index);
-        setFormValues(prev => ({
-            ...prev,
-            variants: newVariants,
-        }));
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -183,7 +131,7 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                         <label className="block mb-2 text-sm font-medium text-gray-700">Price</label>
                         <input
                             name="price"
-                            type="text"
+                            type="number" // Changed to number for better input handling
                             value={formValues.price}
                             onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-sm"
@@ -201,36 +149,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                             className="w-full p-3 border border-gray-300 rounded-sm"
                             required
                         />
-                    </div>
-
-                    {/* Tags */}
-                    <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-700">Tags</label>
-                        {formValues.tags.map((tag, index) => (
-                            <div key={index} className="flex-grow relative mb-2">
-                                <input
-                                    name={`tags.${index}`}
-                                    value={tag}
-                                    onChange={handleChange}
-                                    className="w-full p-3 border border-gray-300 rounded-sm pr-12"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => handleRemoveTag(index)}
-                                    className="absolute right-2 top-2 p-2 text-gray-800 font-bold"
-                                >
-                                    <ImCross />
-                                </button>
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={handleAddTag}
-                            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-sm shadow-md hover:bg-blue-600"
-                        >
-                            Add Tag
-                        </button>
                     </div>
 
                     {/* Image */}
@@ -268,36 +186,6 @@ const UpdateProductModal: React.FC<IUpdateProductModalProps> = ({ product, isOpe
                             className="mr-2 leading-tight"
                         />
                         <label className="text-sm text-gray-700">In Stock</label>
-                    </div>
-
-                    {/* Variants */}
-                    <div>
-                        <label className="block mb-2 text-sm font-medium text-gray-700">Variants</label>
-                        {formValues.variants.map((variant, index) => (
-                            <div key={index} className="flex items-center space-x-2 mb-2">
-                                <input
-                                    name={`variants.${index}.image`}
-                                    value={variant.image}
-                                    onChange={handleChange}
-                                    className="w-full p-3 border border-gray-300 rounded-sm"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => handleRemoveVariant(index)}
-                                    className="px-3 py-2 text-black"
-                                >
-                                    <ImCross />
-                                </button>
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={handleAddVariant}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-sm shadow-md hover:bg-blue-600"
-                        >
-                            Add More Image
-                        </button>
                     </div>
 
                     <button

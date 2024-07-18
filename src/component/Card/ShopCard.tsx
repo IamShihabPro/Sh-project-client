@@ -16,7 +16,7 @@ const ShopCard = ({product}: {product: TProduct}) => {
 
         <div className='font-semibold text-lg'>{product?.name}</div>
 
-        <div className='font-light text-neutral-700'>{product?.description}</div>
+        {/* <div className='font-light text-neutral-700'>{product?.description}</div> */}
 
         <div className='flex flex-row items-center justify-between'>
           <div className='font-semibold'>$ {product?.price}</div>

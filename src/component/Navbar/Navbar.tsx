@@ -2,7 +2,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from '../../assets/logo/campLogo.png';
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import Hamburger from "hamburger-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 
@@ -11,21 +11,36 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const cartItems = useAppSelector((state: RootState) => state.cart.items);
 
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+    const [navBg, setNavBg] = useState("bg-transparent");
+
     const navItems = [
         { id: 1, link: '/', title: 'Home' },
         { id: 2, link: '/products', title: 'Products' },
         { id: 3, link: '/about', title: 'About us' },
-        // { id: 4, link: '/management', title: 'Management' },
     ];
 
+    const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+        setPrevScrollPos(currentScrollPos);
+        setNavBg(currentScrollPos > 10 ? "bg-gray-900" : "bg-transparent");
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [prevScrollPos, visible]);
+
     return (
-        <nav className="bg-gray-900 fixed top-0 inset-x-0 z-50 shadow-sm">
+        <nav className={`${navBg} fixed top-0 inset-x-0 z-50 shadow-sm transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     <div className='hidden md:block lg:block'>
                         <NavLink to="/" className="flex items-center gap-2 text-white">
                             <Link to='/' className="font-bold text-xl">
-                                <img src={logo} className='w-28' alt="" />
+                                <img src={logo} className='w-28' alt="Logo" />
                             </Link>
                         </NavLink>
                     </div>
@@ -61,7 +76,7 @@ const Navbar = () => {
 
                     <div className='block md:hidden lg:hidden'>
                         <NavLink to="/" className="flex items-center gap-2 text-white">
-                            <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-20' alt="" /></Link>
+                            <Link to='/' className="font-bold text-2xl"><img src={logo} className='w-20' alt="Logo" /></Link>
                         </NavLink>
                     </div>
 

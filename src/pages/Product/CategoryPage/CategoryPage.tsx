@@ -1,10 +1,12 @@
 import ShopCard from "@/component/Card/ShopCard";
-import { useGetProductQuery } from "@/redux/feature/product/productApi";
+// import { useGetProductQuery } from "@/redux/feature/product/productApi";
 import { TProduct } from "@/types/productType";
 import { Link } from "react-router-dom";
+import { data } from "@/Data/products";
 
 const CategoryPage = () => {
-    const {data} = useGetProductQuery(undefined)
+    // const {data} = useGetProductQuery(undefined)
+
 
     return (
         <div className="max-w-screen-2xl mx-auto">
@@ -14,7 +16,7 @@ const CategoryPage = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
                 {
-                    data?.data?.slice(0,4).map((product: TProduct) =>(
+                    data?.slice(0,4).map((product: TProduct) =>(
                         <ShopCard key={product?._id} product={product} />
                     ))
                 }

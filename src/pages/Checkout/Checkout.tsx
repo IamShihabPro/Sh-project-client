@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import Loader from "@/component/Loader/Loader";
-import { useAddOrderMutation } from "@/redux/feature/order/orderApi";
-import { toast } from "sonner";
 import { clearCart } from "@/redux/feature/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
-  const [addOrder] = useAddOrderMutation();
   const dispatch = useAppDispatch()
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
   const navigate = useNavigate()
@@ -40,35 +37,9 @@ const CheckoutPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    const orderData = {
-      userName: userDetails.userName,
-      userEmail: userDetails.userEmail,
-      phone: parseInt(userDetails.phone),
-      address: userDetails.address,
-      products: cartItems.map(item => ({
-        productId: item.productId,
-        name: item.name,
-        price: item.price,
-        category: item.category,
-        image: item.image,
-        quantity: item.quantity,
-      })),
-    };
     
-
-    try {
-      const res = await addOrder(orderData).unwrap();
-      if (res?.success) {
-        toast.success(res?.message);
         dispatch(clearCart());
         navigate('/')
-      } else {
-        toast.error("Failed to place order. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-    } 
   };
 
   return (

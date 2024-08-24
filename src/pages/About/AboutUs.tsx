@@ -34,17 +34,21 @@ const AboutUs = () => {
 
       <div className="mb-12">
         <h2 className="text-3xl font-semibold mb-4 text-gray-700">Contact Information</h2>
-        <p className="text-lg mb-1">Phone: <span className="font-medium">01850411622</span></p>
-        <p className="text-lg mb-1">Email: <span className="font-medium">mshihab.pro@gmail.com</span></p>
-        <p className="text-lg">Address: <span className="font-medium">Chittagong, Bahaddarhat, Bangladesh</span></p>
+        <p className="text-lg mb-1">Phone: <span className="font-medium">+61416722167</span></p>
+        <p className="text-lg mb-1">Email: <span className="font-medium">kamrulhasanshamim@cqumail.com</span></p>
+        <p className="text-lg">Address: <span className="font-medium">44 Duke St, Braybrook, VIC</span></p>
       </div>
+
+      {/* <div>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0121583284936!2d144.84318727570397!3d-37.78975483266601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65e20ccb80c27%3A0x7fbc8adbc8609bc0!2s44%20Duke%20St%2C%20Braybrook%20VIC%203019!5e0!3m2!1sen!2sau!4v1724496110645!5m2!1sen!2sau" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div> */}
 
       <div className="mb-12">
         <h2 className="text-3xl font-semibold mb-4 text-gray-700">Our Location</h2>
         <div className="h-64 rounded-lg overflow-hidden shadow-md">
           <iframe
             title="Shop Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.5736200408355!2d91.8441997!3d22.36972295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ad2777c9c1cf83%3A0xb8796c419fa1021b!2z4Kas4Ka54Kam4KeN4Kam4Ka-4Kaw4Ka54Ka-4KafLCDgpprgpp_gp43gpp_gppfgp43gprDgpr7gpq4!5e0!3m2!1sbn!2sbd!4v1721150524377!5m2!1sbn!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0121583284936!2d144.84318727570397!3d-37.78975483266601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65e20ccb80c27%3A0x7fbc8adbc8609bc0!2s44%20Duke%20St%2C%20Braybrook%20VIC%203019!5e0!3m2!1sen!2sau!4v1724496110645!5m2!1sen!2sau"
             width="100%"
             height="100%"
             style={{ border: 0 }}

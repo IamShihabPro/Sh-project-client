@@ -1,32 +1,23 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { IoMdClose } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import { data } from '@/Data/products';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { addToCart, updateCartQuantity } from '@/redux/feature/cart/cartSlice';
+import { TProduct } from '@/types/productType';
+import { toast } from 'sonner';
+import { TCart } from '@/types/cartType';
 import { Rating } from '@smastrom/react-rating';
-import '@smastrom/react-rating/style.css';
-import { TProduct } from "@/types/productType";
-import { TCart } from "@/types/cartType";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addToCart, updateCartQuantity } from "@/redux/feature/cart/cartSlice";
-import { useGetSingleProductQuery } from "@/redux/feature/product/productApi";
-import Loader from "@/component/Loader/Loader";
-import RatingModal from "@/component/Modal/RatingModal";
-import { toast } from "sonner";
-import Magnifier from './Magnifier';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetSingleProductQuery(id as string);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(state => state.cart.items);
 
-  if (isLoading) return <Loader />;
-  if (isError) {
-    console.error("Error loading product:", isError);
-    return <p>Failed to load product details.</p>;
-  }
+  // Use the find method to get a single product
+  const product = data.find(product => product._id === id);
 
-  const product = data?.data;
+  if (!product) {
+    return <div className="text-center text-gray-700 mt-28">Product not found</div>;
+  }
 
   const calculateAverageRating = (ratings: { rating: number }[]) => {
     if (!ratings.length) return 0;
@@ -35,9 +26,6 @@ const ProductDetails = () => {
   };
 
   const averageRating = calculateAverageRating(product?.ratings || []);
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleAddToCart = (product: TProduct) => {
     const existingCartItem = cartItems.find(item => item.productId === product._id);
@@ -70,51 +58,36 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 mt-28">
-      <div className="flex flex-col lg:flex-row gap-10">
-        <div className="lg:w-1/2 flex flex-col items-center mx-2">
-          <Magnifier src={product?.image} alt={product?.name} zoom={3} />
+    <div className="container mx-auto p-6 lg:p-12 mt-28 bg-white">
+      <div className="flex flex-col lg:flex-row gap-12">
+        <div className="lg:w-1/2 flex flex-col items-center">
+          <img 
+            src={product?.image} 
+            alt={product?.name} 
+            className="rounded-lg shadow-md object-cover w-full lg:h-auto"
+          />
         </div>
-        <div className="lg:w-1/2 flex flex-col p-6 bg-white rounded-lg shadow-sm">
-          <h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
-          <p className="text-gray-700 mb-6">{product?.description}</p>
+        <div className="lg:w-1/2 flex flex-col p-6 bg-gray-50 rounded-lg shadow-sm">
+          <h1 className="text-4xl font-bold mb-6 text-gray-900">{product?.name}</h1>
+          <p className="text-lg text-gray-700 mb-8 leading-relaxed">{product?.description}</p>
           <div className="flex items-center gap-2 mb-4">
             <Rating style={{ maxWidth: 70 }} value={averageRating} readOnly />
             <span className="text-gray-500">({product?.ratings.length})</span>
           </div>
-          <div className="flex items-center mb-4">
-            <p className="text-lg text-gray-500 mr-2">Inventory:</p>
-            <p className="text-lg text-gray-500">{product?.inventory?.quantity}</p>
-          </div>
-          <div className="flex items-center mb-6">
-            <p className="text-lg text-gray-500 font-medium mr-2">Price:</p>
-            <p className="text-lg text-red-500 font-bold">${product?.price}</p>
-          </div>
+          <p className="text-lg text-gray-600 font-medium mb-4">Category: <span className="uppercase text-gray-800">{product?.category}</span></p>
+          <p className="text-2xl text-red-500 font-bold mb-6">${product?.price}</p>
           <button
             onClick={() => handleAddToCart(product)}
             disabled={product?.inventory?.quantity <= 0}
-            className={`bg-white text-gray-600 px-6 py-3 text-lg border border-gray-600 transition duration-300 ease-in-out mt-6 ${product?.inventory?.quantity <= 0 ? "cursor-not-allowed opacity-50" : "hover:bg-gray-900 hover:text-white"}`}
+            className={`bg-black text-white px-8 py-4 text-lg font-semibold rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-900 ${
+              product?.inventory?.quantity <= 0 ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
             Add To Cart
           </button>
-          <div className="mt-6">
-            <p className="text-lg"><span className="font-bold">Category:</span> <span className="uppercase"> {product?.category}</span></p>
-            <button onClick={handleOpenModal} className="mt-6 text-center font-medium bg-gray-900 text-white px-4 py-2">
-              Rate Product
-            </button>
-          </div>
+          <p className="text-md text-gray-500 mt-4">Available stock: {product?.inventory?.quantity}</p>
         </div>
       </div>
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white px-4 py-6 rounded-lg shadow-lg relative">
-            <button onClick={handleCloseModal} className="absolute top-2 right-2 text-gray-500" aria-label="Close Modal">
-              <IoMdClose className="w-6 h-6" />
-            </button>
-            <RatingModal product={product} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

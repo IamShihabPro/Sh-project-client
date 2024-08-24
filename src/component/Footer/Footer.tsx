@@ -10,12 +10,12 @@ const Footer = () => {
           <div className="flex flex-col justify-between items-start gap-4">
             <h1 className="text-3xl font-bold">Camping Shop</h1>
             <div className="flex flex-col items-start">
-              <p>Chittagong, Bahaddarhat</p>
-              <p>Bangladesh</p>
+              <p>44 Duke St, Braybrook, VIC</p>
+              {/* <p>Australia</p> */}
             </div>
             <div className="text-start">
-              <h1>Phone: +8801850411622</h1>
-              <h1>Email: mshihab.pro@gmail.com</h1>
+              <h1>Phone: +61416722167</h1>
+              <h1>Email: kamrulhasanshamim@cqumail.com</h1>
             </div>
 
             <div className="flex space-x-4">
@@ -67,7 +67,7 @@ const Footer = () => {
       <hr className='w-full h-1 mt-4' />
       <div className="mt-4 bg-gray-900">
         <div className="container mx-auto px-4 py-2 text-center text-white drop-shadow-lg">
-          <p className='text-slate-100 font-medium text-md'>&copy; {new Date().getFullYear()} Shihab. All Rights Reserved.</p>
+          <p className='text-slate-100 font-medium text-md'>&copy; {new Date().getFullYear()} Kamrul Hasan Shamim. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

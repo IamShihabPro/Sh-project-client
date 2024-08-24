@@ -1,23 +1,19 @@
 import ProductCard from "@/component/Card/ProductCard";
 import Filter from "./Filter";
 import { TProduct } from "@/types/productType";
-import { useGetProductQuery } from "@/redux/feature/product/productApi";
-import Loader from "@/component/Loader/Loader";
 import { useState, useMemo } from "react";
+import { data } from "@/Data/products";
 
 const ProductPage = () => {
-    const { data, isLoading } = useGetProductQuery(undefined);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(100);
     const [sortOrder, setSortOrder] = useState<string>('default');
 
-    const products = data?.data as TProduct[] || [];
-
     // Filter and sort products based on selected criteria
     const filteredProducts = useMemo(() => {
-        let filtered = products.filter(product => {
+        let filtered = data.filter(product => {
             const matchesCategory = selectedCategory === '' || product.category === selectedCategory;
             const matchesPrice = product.price >= minPriceFilter && product.price <= maxPriceFilter;
             const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -31,7 +27,7 @@ const ProductPage = () => {
         }
 
         return filtered;
-    }, [products, selectedCategory, minPriceFilter, maxPriceFilter, sortOrder, searchTerm]);
+    }, [selectedCategory, minPriceFilter, maxPriceFilter, sortOrder, searchTerm]);
 
     // Reset filters and sorting
     const clearFilters = () => {
@@ -41,10 +37,6 @@ const ProductPage = () => {
         setMaxPriceFilter(100);
         setSortOrder('default');
     };
-
-    if (isLoading) {
-        return <Loader />;
-    }
 
     return (
         <div className="max-w-screen-2xl mx-auto mt-28">
@@ -61,11 +53,10 @@ const ProductPage = () => {
                     />
                     <button className="btn px-4 py-3 bg-white text-gray-900 font-bold">Search</button>
                 </div>
-
             </div>
 
             <div>
-            <div className="text-start m-5">
+                <div className="text-start m-5">
                     <button 
                         className="btn px-4 py-3 bg-black text-white font-bold"
                         onClick={clearFilters}
@@ -77,7 +68,7 @@ const ProductPage = () => {
                     {/* Filter Section */}
                     <div className="lg:col-span-1">
                         <Filter 
-                            categories={Array.from(new Set(products.map(product => product.category)))}
+                            categories={Array.from(new Set(data.map(product => product.category)))}
                             selectedCategory={selectedCategory}
                             setSelectedCategory={setSelectedCategory}
                             minPriceFilter={minPriceFilter}
@@ -92,7 +83,7 @@ const ProductPage = () => {
                     {/* Product Listing Section */}
                     <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {filteredProducts.map((product: TProduct) => (
-                            <ProductCard key={product?._id} product={product} />
+                            <ProductCard key={product._id} product={product} />
                         ))}
                     </div>
                 </div>
